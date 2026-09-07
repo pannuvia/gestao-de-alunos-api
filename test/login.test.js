@@ -1,6 +1,8 @@
 import request from 'supertest';
 import { expect } from 'chai';
 import app from '../src/app.js';
+import * as sinon from 'sinon';
+import authService from '../src/services/auth.service.js';
 
 describe('Cenarios de Login', () => {
   context('Cenário de Sucesso - Autenticação bem-sucedida', () => {
@@ -127,4 +129,22 @@ describe('Cenarios de Login', () => {
       expect(resposta.body.error).to.equal('Os campos "email" e "senha" são obrigatórios.');
     });
   });
+  context('Cenários de Falha - (Status HTTP 500)', () => {        
+    it('deve falhar ao tentar login com erro de conexão com o banco de dados', async () => {
+      sinon.stub(authService, 'login').throws(new Error('Erro de conexão.'));
+
+      const resposta = await request(app)
+        .post('/api/auth/login')
+        .send({
+          email: 'admin@escola.com',
+          senha: 'admin1234',
+        });
+
+      expect(resposta.status).to.equal(500);
+      expect(resposta.body.error).to.equal('Erro interno do servidor.');
+
+      sinon.restore();
+    });
+  });
 });
+  
