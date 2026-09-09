@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { expect } from 'chai';
-import app from '../src/app.js';
+import app from '../../src/app.js';
 import * as sinon from 'sinon';
-import authService from '../src/services/auth.service.js';
+import authService from '../../src/services/auth.service.js';
 
 describe('Cenarios de Login', () => {
   context('Cenário de Sucesso - Autenticação bem-sucedida', () => {
