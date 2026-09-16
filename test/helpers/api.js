@@ -1,5 +1,9 @@
 import request from 'supertest';
-import 'dotenv/config.js';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'node:url';
+
+const envPath = fileURLToPath(new URL('../config/.env', import.meta.url));
+dotenv.config({ path: envPath });
 
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 

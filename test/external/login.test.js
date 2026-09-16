@@ -1,4 +1,4 @@
-import {api} from '../helpers/api.js';
+import { api } from '../helpers/api.js';
 import { expect } from 'chai';
 import { obterTokenAdmin } from '../helpers/auth.js';
 import * as sinon from 'sinon';

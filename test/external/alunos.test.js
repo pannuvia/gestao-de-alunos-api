@@ -1,25 +1,22 @@
 import { api } from '../helpers/api.js';
 import { expect } from 'chai';
 import { obterTokenAdmin } from '../helpers/auth.js';
+import { gerarAluno } from '../factories/alunosFactory.js';
 
 describe('Cenarios de Alunos', () => {
   it('deve cadastrar um aluno quando fornecer dados válidos', async () => {
+    const aluno = gerarAluno();
 
     const alunos = await api()
       .post('/api/admin/alunos')
       .set('Content-Type', 'application/json')
       .set('Authorization', await obterTokenAdmin())
-      .send({
-        nome: 'Pannuvia Monteiro',
-        email: 'pannuvia@monteiro.com',
-        matricula: '2026001',
-        senha: 'senha123',
-      });
+      .send(aluno);
 
     expect(alunos.status).to.equal(201);
-    expect(alunos.body).to.have.property('nome', 'Pannuvia Monteiro');
-    expect(alunos.body).to.have.property('email', 'pannuvia@monteiro.com');
-    expect(alunos.body).to.have.property('matricula', '2026001');
+    expect(alunos.body).to.have.property('nome', aluno.nome);
+    expect(alunos.body).to.have.property('email', aluno.email);
+    expect(alunos.body).to.have.property('matricula', aluno.matricula);
   });
 
   it('nao deve cadastrar um aluno quando aluno ja existir', async () => {

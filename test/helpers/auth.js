@@ -1,12 +1,13 @@
-import {api} from './api.js';
-import 'dotenv/config.js';
+import { api } from './api.js';
+
+const senhaAdmin = process.env.ADMIN_PASSWORD || process.env.ADMIN_SENHA || 'admin123';
 
 export async function obterToken(email, senha) {
   const login = await api()
     .post('/api/auth/login')
     .send({
-      email: email,
-      senha: senha,
+      email,
+      senha,
     });
 
   return login.body.token;
@@ -19,11 +20,11 @@ export async function obterTokenAdmin() {
     const login = await api()
       .post('/api/auth/login')
       .send({
-        email: process.env.ADMIN_EMAIL,
-        senha: process.env.ADMIN_PASSWORD,
+        email: process.env.ADMIN_EMAIL || 'admin@escola.com',
+        senha: senhaAdmin,
       });
-    
-      tokenAdmin = login.body.token;
+
+    tokenAdmin = login.body.token;
   }
   return `Bearer ${tokenAdmin}`;
 }

@@ -1,12 +1,10 @@
-/*
-
 import request from 'supertest';
 import { expect } from 'chai';
 import app from '../../src/app.js';
 import * as sinon from 'sinon';
 import authService from '../../src/services/auth.service.js';
 
-describe('Cenarios de Login', () => {
+describe('Cenarios de Login Internal', () => {
   context('Cenário de Sucesso - Autenticação bem-sucedida', () => {
     it('deve autenticar com sucesso ao tentar login com credenciais válidas', async () => {
       const resposta = await request(app)
@@ -163,5 +161,3 @@ describe('Cenarios de Login', () => {
     });
   });
 });
-  
-/** */

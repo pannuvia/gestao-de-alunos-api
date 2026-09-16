@@ -1,21 +1,17 @@
 import { api } from '../helpers/api.js';
 import { expect } from 'chai';
 import { obterTokenAdmin } from '../helpers/auth.js';
-import 'dotenv/config.js';
+import { gerarAluno } from '../factories/alunosFactory.js';
+import { gerarDisciplina } from '../factories/disciplinasFactory.js';
 
-describe('Cenarios de Cadastro de Aluno em Disciplina', () => {
+describe('Cenarios de Cadastro de Aluno numa Disciplina', () => {
   it('deve cadastrar um aluno numa disciplina', async () => {
  
         const alunos = await api()
             .post('/api/admin/alunos')
             .set('Content-Type', 'application/json')
             .set('Authorization', await obterTokenAdmin())
-            .send({
-                nome: 'Pannuvia Monteiro',
-                email: 'pannuvia11@email.com',
-                matricula: '202301191',
-                senha: 'senha123',
-        });
+            .send(gerarAluno());
 
         let alunoId = alunos.body.id;
   
@@ -23,11 +19,8 @@ describe('Cenarios de Cadastro de Aluno em Disciplina', () => {
             .post('/api/admin/disciplinas')
             .set('Content-Type', 'application/json')
             .set('Authorization', await obterTokenAdmin())
-            .send({
-                nome: 'Biologia 11110',
-                codigo: 'BIO11110',
-        });
-        
+            .send(gerarDisciplina());
+
         let disciplinaId = disciplinas.body.id;
 
         const matricula = await api()
@@ -45,4 +38,5 @@ describe('Cenarios de Cadastro de Aluno em Disciplina', () => {
         expect(matricula.body.disciplinaId).to.equal(disciplinaId);
         
     });
-});
+
+})
