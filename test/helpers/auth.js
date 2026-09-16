@@ -1,7 +1,7 @@
-import request from 'supertest';
+import {api} from '../helpers/api.js';
 
 export async function obterToken(email, senha) {
-  const login = await request('http://localhost:3000')
+  const login = await api()
     .post('/api/auth/login')
     .send({
       email: email,

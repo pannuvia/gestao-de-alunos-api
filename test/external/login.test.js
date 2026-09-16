@@ -1,15 +1,13 @@
-/*
-
-import request from 'supertest';
+import {api} from '../helpers/api.js';
 import { expect } from 'chai';
-import app from '../../src/app.js';
+import { obterToken } from '../helpers/auth.js';
 import * as sinon from 'sinon';
 import authService from '../../src/services/auth.service.js';
 
 describe('Cenarios de Login', () => {
   context('Cenário de Sucesso - Autenticação bem-sucedida', () => {
     it('deve autenticar com sucesso ao tentar login com credenciais válidas', async () => {
-      const resposta = await request(app)
+      const resposta = await api()    
         .post('/api/auth/login')
         .send({   
           email: 'admin@escola.com',
@@ -23,7 +21,7 @@ describe('Cenarios de Login', () => {
 
   context('Cenários de Falha - (Status HTTP 401)', () => {
     it('deve falhar ao tentar login com senha inválida', async () => {
-      const resposta = await request(app)
+      const resposta = await api()
         .post('/api/auth/login')
         .send({ 
             email: 'admin@escola.com',
@@ -34,7 +32,7 @@ describe('Cenarios de Login', () => {
       expect(resposta.body.error).to.equal('E-mail ou senha inválidos.');
     });
     it('deve falhar ao tentar login com e-mail inválido', async () => {
-      const resposta = await request(app)
+      const resposta = await api()
         .post('/api/auth/login')
         .send({ 
             email: 'admin#escola.com',
@@ -48,7 +46,7 @@ describe('Cenarios de Login', () => {
 
   context('Cenários de Falha - (Status HTTP 400)', () => {
     it('deve falhar ao tentar login com senha vazia', async () => {
-      const resposta = await request(app)
+      const resposta = await api()
         .post('/api/auth/login')
         .send({ 
             email: 'admin#escola.com',
@@ -59,7 +57,7 @@ describe('Cenarios de Login', () => {
       expect(resposta.body.error).to.equal('Os campos "email" e "senha" são obrigatórios.');
     });
     it('deve falhar ao tentar login com email vazio', async () => {
-      const resposta = await request(app)
+      const resposta = await api()
         .post('/api/auth/login')
         .send({ 
             email: '',
@@ -70,7 +68,7 @@ describe('Cenarios de Login', () => {
       expect(resposta.body.error).to.equal('Os campos "email" e "senha" são obrigatórios.');
     });
     it('deve falhar ao tentar login com email e senha vazios', async () => {
-      const resposta = await request(app)
+      const resposta = await api()
         .post('/api/auth/login')
         .send({ 
             email: '',
@@ -81,7 +79,7 @@ describe('Cenarios de Login', () => {
       expect(resposta.body.error).to.equal('Os campos "email" e "senha" são obrigatórios.');
     });
     it('deve falhar ao tentar login sem preencher senha', async () => {
-      const resposta = await request(app)
+      const resposta = await api()
         .post('/api/auth/login')
         .send({ 
             email: 'admin@escola.com'
@@ -91,7 +89,7 @@ describe('Cenarios de Login', () => {
       expect(resposta.body.error).to.equal('Os campos "email" e "senha" são obrigatórios.');
     });
     it('deve falhar ao tentar login sem preencher email', async () => {
-      const resposta = await request(app)
+      const resposta = await api()
         .post('/api/auth/login')
         .send({ 
             senha: ''
@@ -101,7 +99,7 @@ describe('Cenarios de Login', () => {
       expect(resposta.body.error).to.equal('Os campos "email" e "senha" são obrigatórios.');
     });
     it('deve falhar ao tentar login sem preencher nenhum campo', async () => {
-      const resposta = await request(app)
+      const resposta = await api()
         .post('/api/auth/login')
         .send({
 
@@ -111,7 +109,7 @@ describe('Cenarios de Login', () => {
       expect(resposta.body.error).to.equal('Os campos "email" e "senha" são obrigatórios.');
     });
     it('deve falhar ao tentar login com senha nula', async () => {
-      const resposta = await request(app)
+      const resposta = await api()
         .post('/api/auth/login')
         .send({ 
             email: 'admin#escola.com',
@@ -122,7 +120,7 @@ describe('Cenarios de Login', () => {
       expect(resposta.body.error).to.equal('Os campos "email" e "senha" são obrigatórios.');
     });
     it('deve falhar ao tentar login com email nulo', async () => {
-      const resposta = await request(app)
+      const resposta = await api()
         .post('/api/auth/login')
         .send({ 
             email: null,
@@ -134,7 +132,7 @@ describe('Cenarios de Login', () => {
       expect(resposta.body.error).to.equal('Os campos "email" e "senha" são obrigatórios.');
     });
     it('deve falhar ao tentar login com email e senha nulos', async () => {
-      const resposta = await request(app)
+      const resposta = await api()
         .post('/api/auth/login')
         .send({ 
             email: null,
@@ -145,23 +143,5 @@ describe('Cenarios de Login', () => {
       expect(resposta.body.error).to.equal('Os campos "email" e "senha" são obrigatórios.');
     });
   });
-  context('Cenários de Falha - (Status HTTP 500)', () => {        
-    it('deve falhar ao tentar login com erro de conexão com o banco de dados', async () => {
-      sinon.stub(authService, 'login').throws(new Error('Erro de conexão.'));
-
-      const resposta = await request(app)
-        .post('/api/auth/login')
-        .send({
-          email: 'admin@escola.com',
-          senha: 'admin1234',
-      });
-
-      expect(resposta.status).to.equal(500);
-      expect(resposta.body.error).to.equal('Erro interno do servidor.');
-
-      sinon.restore();
-    });
-  });
 });
   
-/** */

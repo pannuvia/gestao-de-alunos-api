@@ -1,37 +1,38 @@
-import request from 'supertest';
+import {api} from '../helpers/api.js';
 import { expect } from 'chai';
 import { obterToken } from '../helpers/auth.js';
+import 'dotenv/config.js';
 
 describe('Cenarios de Cadastro de Aluno em Disciplina', () => {
   it('deve cadastrar um aluno numa disciplina', async () => {
 
-    const token = await obterToken('admin@escola.com', 'admin123');
+    const token = await obterToken(process.env.ADMIN_EMAIL, process.env.ADMIN_PASSWORD);
   
-        const alunos = await request('http://localhost:3000')
+        const alunos = await api()
             .post('/api/admin/alunos')
             .set('Content-Type', 'application/json')
             .set('Authorization', `Bearer ${token}`)
             .send({
                 nome: 'Pannuvia Monteiro',
                 email: 'pannuvia@email.com',
-                matricula: '2026003',
+                matricula: '20230101',
                 senha: 'senha123',
         });
 
         let alunoId = alunos.body.id;
   
-        const disciplinas = await request('http://localhost:3000')
+        const disciplinas = await api()
             .post('/api/admin/disciplinas')
             .set('Content-Type', 'application/json')
             .set('Authorization', `Bearer ${token}`)
             .send({
-                nome: 'Biologia 2',
-                codigo: 'BIO102',
+                nome: 'Biologia 1118',
+                codigo: 'BIO1118',
         });
         
         let disciplinaId = disciplinas.body.id;
 
-        const matricula = await request('http://localhost:3000')
+        const matricula = await api()
             .post(`/api/admin/disciplinas/${disciplinaId}/matriculas`)
             .set('Content-Type', 'application/json')
             .set('Authorization', `Bearer ${token}`)

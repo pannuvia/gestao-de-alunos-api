@@ -1,4 +1,4 @@
-import request from 'supertest';
+import {api} from '../helpers/api.js';
 import { expect } from 'chai';
 import { obterToken } from '../helpers/auth.js';
 
@@ -7,7 +7,7 @@ describe('Cenarios de Alunos', () => {
 
     const token = await obterToken('admin@escola.com', 'admin123');
 
-    const alunos = await request('http://localhost:3000')
+    const alunos = await api()
       .post('/api/admin/alunos')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`)
@@ -28,7 +28,7 @@ describe('Cenarios de Alunos', () => {
 
     const token = await obterToken('admin@escola.com', 'admin123');
 
-    const alunos = await request('http://localhost:3000')
+    const alunos = await api()
       .post('/api/admin/alunos')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`)
