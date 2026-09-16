@@ -1,21 +1,19 @@
-import {api} from '../helpers/api.js';
+import { api } from '../helpers/api.js';
 import { expect } from 'chai';
-import { obterToken } from '../helpers/auth.js';
+import { obterTokenAdmin } from '../helpers/auth.js';
 import 'dotenv/config.js';
 
 describe('Cenarios de Cadastro de Aluno em Disciplina', () => {
   it('deve cadastrar um aluno numa disciplina', async () => {
-
-    const token = await obterToken(process.env.ADMIN_EMAIL, process.env.ADMIN_PASSWORD);
-  
+ 
         const alunos = await api()
             .post('/api/admin/alunos')
             .set('Content-Type', 'application/json')
-            .set('Authorization', `Bearer ${token}`)
+            .set('Authorization', await obterTokenAdmin())
             .send({
                 nome: 'Pannuvia Monteiro',
-                email: 'pannuvia@email.com',
-                matricula: '20230101',
+                email: 'pannuvia11@email.com',
+                matricula: '202301191',
                 senha: 'senha123',
         });
 
@@ -24,10 +22,10 @@ describe('Cenarios de Cadastro de Aluno em Disciplina', () => {
         const disciplinas = await api()
             .post('/api/admin/disciplinas')
             .set('Content-Type', 'application/json')
-            .set('Authorization', `Bearer ${token}`)
+            .set('Authorization', await obterTokenAdmin())
             .send({
-                nome: 'Biologia 1118',
-                codigo: 'BIO1118',
+                nome: 'Biologia 11110',
+                codigo: 'BIO11110',
         });
         
         let disciplinaId = disciplinas.body.id;
@@ -35,7 +33,7 @@ describe('Cenarios de Cadastro de Aluno em Disciplina', () => {
         const matricula = await api()
             .post(`/api/admin/disciplinas/${disciplinaId}/matriculas`)
             .set('Content-Type', 'application/json')
-            .set('Authorization', `Bearer ${token}`)
+            .set('Authorization', await obterTokenAdmin())
             .send(
                 {
                     alunoId: alunoId,

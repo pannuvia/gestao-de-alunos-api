@@ -1,6 +1,6 @@
 import {api} from '../helpers/api.js';
 import { expect } from 'chai';
-import { obterToken } from '../helpers/auth.js';
+import { obterTokenAdmin } from '../helpers/auth.js';
 import * as sinon from 'sinon';
 import authService from '../../src/services/auth.service.js';
 
@@ -10,8 +10,8 @@ describe('Cenarios de Login', () => {
       const resposta = await api()    
         .post('/api/auth/login')
         .send({   
-          email: 'admin@escola.com',
-          senha: 'admin123'
+          email: process.env.ADMIN_EMAIL,
+          senha: process.env.ADMIN_PASSWORD
       });
     
       expect(resposta.status).to.equal(200);

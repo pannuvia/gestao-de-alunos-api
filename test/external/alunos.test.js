@@ -1,16 +1,14 @@
-import {api} from '../helpers/api.js';
+import { api } from '../helpers/api.js';
 import { expect } from 'chai';
-import { obterToken } from '../helpers/auth.js';
+import { obterTokenAdmin } from '../helpers/auth.js';
 
 describe('Cenarios de Alunos', () => {
   it('deve cadastrar um aluno quando fornecer dados válidos', async () => {
 
-    const token = await obterToken('admin@escola.com', 'admin123');
-
     const alunos = await api()
       .post('/api/admin/alunos')
       .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', await obterTokenAdmin())
       .send({
         nome: 'Pannuvia Monteiro',
         email: 'pannuvia@monteiro.com',
@@ -26,12 +24,10 @@ describe('Cenarios de Alunos', () => {
 
   it('nao deve cadastrar um aluno quando aluno ja existir', async () => {
 
-    const token = await obterToken('admin@escola.com', 'admin123');
-
     const alunos = await api()
       .post('/api/admin/alunos')
       .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', await obterTokenAdmin())
       .send({
         nome: 'Ana Souza',
         email: 'ana.souza@example.com',
@@ -41,5 +37,5 @@ describe('Cenarios de Alunos', () => {
 
     expect(alunos.status).to.equal(409);
     expect(alunos.body.error).to.equal('Já existe um aluno cadastrado com essa matrícula ou e-mail.');
-  });   
+  });
 });
