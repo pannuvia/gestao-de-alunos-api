@@ -1,0 +1,33 @@
+[
+    {
+        "descricaoDoTeste": "deve cadastrar o aluno Ana Silva numa disciplina",
+        "dadosAluno": {
+            "nome": "Ana Silva",
+            "email": "ana.silva809@escola.com",
+            "matricula": "202402",
+            "senha": "senha123"
+        },
+        "dadosDisciplina": {
+            "nome": "Matemática Aplicada 2",
+            "codigo": "MATAPL102",
+            "cargaHoraria": 60
+        },
+        "status": 201
+    },
+    {
+        "descricaoDoTeste": "deve cadastrar o aluno Ana Souza numa disciplina",
+        "dadosAluno": {
+            "nome": "Ana Souza",
+            "email": "ana.souza809@escola.com",
+            "matricula": "202502",
+            "senha": "senha123"
+        },
+        "dadosDisciplina": {
+            "nome": "Geografia 2",
+            "codigo": "GEO102",
+            "cargaHoraria": 60
+        },
+        "status": 201
+    }
+
+]
