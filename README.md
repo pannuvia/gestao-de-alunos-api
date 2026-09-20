@@ -112,6 +112,57 @@ Na primeira execução com o banco vazio, a API popula automaticamente as coleç
 dados fake descrito em [Dados fake pré-carregados](#dados-fake-pré-carregados). Em execuções
 seguintes, os dados já existentes são preservados.
 
+## Testes automatizados
+
+A suíte de testes do projeto foi estruturada para validar o fluxo completo de autenticação e entrega de trabalho, com foco em cenários reais de uso da API.
+
+### Fluxo coberto
+
+Os testes automatizados validam o seguinte cenário:
+
+1. login do administrador;
+2. cadastro de um aluno;
+3. login do aluno;
+4. registro de entrega de trabalho pelo aluno.
+
+Esse fluxo está implementado em `test/external/fluxoAutenticacao.test.js` usando **Mocha**,**SuperTest** e **Chai**.
+
+### Data-Driven Testing
+
+Os dados do cenário ficam em um arquivo JSON em `test/fixtures/fluxoAutenticacao.json`. O teste lê
+esse arquivo e executa os cenários dinamicamente, evitando duplicação de código e permitindo alteração
+fácil dos dados de teste.
+
+### Helpers de autenticação
+
+A automação centraliza o login em helpers em `test/helpers/auth.js`, deixando o código mais limpo e
+reutilizável para:
+
+- login do administrador;
+- login do aluno;
+- obtenção do token JWT para as requisições autenticadas.
+
+### Variáveis de ambiente
+
+O projeto usa **Dotenv** em `test/helpers/api.js` para carregar as variáveis do ambiente de teste,
+permitindo configurar URLs e credenciais sem codificar valores fixos no código.
+
+### CI com GitHub Actions
+
+A pipeline de testes está configurada em `.github/workflows/tests.yml`. Ela executa a suíte em cada `push` e `pull request` para a branch `main`, garantindo validação automática do projeto.
+
+Para executar a suíte localmente:
+
+```bash
+npm test
+```
+
+O comando também pode ser usado com relatório compacto:
+
+```bash
+npm test -- --reporter dot
+```
+
 ## Documentação da API (Swagger)
 
 A documentação completa de todas as rotas, parâmetros, corpos de requisição e respostas está
