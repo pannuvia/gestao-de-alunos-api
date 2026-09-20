@@ -1,0 +1,24 @@
+[
+  {
+    "descricao": "deve autenticar admin, cadastrar aluno, logar como aluno e registrar entrega do trabalho",
+    "admin": {
+      "email": "admin@escola.com",
+      "senha": "admin123"
+    },
+    "aluno": {
+      "nome": "Maria Silva",
+      "email": "maria.silva@example.com",
+      "matricula": "2029001",
+      "senha": "senha123"
+    },
+    "disciplina": {
+      "nome": "Programação Web",
+      "codigo": "PW101",
+      "cargaHoraria": 80
+    },
+    "trabalho": {
+      "titulo": "Entrega do projeto final",
+      "descricao": "Entrega do projeto de programação web"
+    }
+  }
+]

@@ -13,6 +13,10 @@ export async function obterToken(email, senha) {
   return login.body.token;
 }
 
+export async function obterTokenAluno(email, senha) {
+  return `Bearer ${await obterToken(email, senha)}`;
+}
+
 let tokenAdmin = null;
 
 export async function obterTokenAdmin() {
