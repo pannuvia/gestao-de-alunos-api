@@ -122,10 +122,12 @@ Os testes automatizados validam o seguinte cenário:
 
 1. login do administrador;
 2. cadastro de um aluno;
-3. login do aluno;
-4. registro de entrega de trabalho pelo aluno.
+3. cadastro de uma disciplina;
+4. matrícula do aluno na disciplina;
+5. login do aluno;
+6. registro de entrega de trabalho pelo aluno.
 
-Esse fluxo está implementado em `test/external/fluxoAutenticacao.test.js` usando **Mocha**,**SuperTest** e **Chai**.
+Esse fluxo está implementado em `test/external/fluxoAutenticacao.test.js` usando **Mocha**, **SuperTest** e **Chai**.
 
 ### Data-Driven Testing
 
