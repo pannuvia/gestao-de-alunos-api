@@ -34,6 +34,14 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
+      - name: Iniciar API para os testes
+        run: |
+          MONGODB_URI=mongodb://127.0.0.1:27017/gestao-de-alunos-test PORT=3000 npm start > api.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -fsS http://127.0.0.1:3000 >/dev/null && break
+            sleep 1
+          done
+
       - name: Executar testes
         run: npm test
         env:
